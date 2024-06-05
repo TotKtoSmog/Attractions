@@ -11,7 +11,12 @@ namespace Attractions
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            
+
+            builder.Services.AddDbContext<dbContext>(
+                options =>
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+                );
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -20,7 +25,6 @@ namespace Attractions
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
