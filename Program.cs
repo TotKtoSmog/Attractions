@@ -24,9 +24,8 @@ namespace Attractions
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseStatusCodePagesWithReExecute("/Error/Error", "?statusCode={0}");
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();
@@ -34,7 +33,7 @@ namespace Attractions
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            
             app.Run();
         }
     }

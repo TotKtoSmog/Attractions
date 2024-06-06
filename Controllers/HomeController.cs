@@ -1,7 +1,6 @@
 using Attractions.Dbcontext;
 using Attractions.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Attractions.Controllers
@@ -17,7 +16,6 @@ namespace Attractions.Controllers
         }
 
         public IActionResult Index() => View();
-
         public IActionResult Privacy() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
