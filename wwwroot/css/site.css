@@ -30,3 +30,9 @@ body {
 .background-gradient {
     background: linear-gradient(to bottom right, #7DE2FC, #B9B6E5);
 }
+.rotateImg {
+    transition: transform 0.5s ease;
+}
+.rotateImg:hover {
+    transform: rotate(360deg);
+}
