@@ -7,6 +7,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Image\404.png" />
+    <None Include="wwwroot\Image\arrow.png" />
+    <None Include="wwwroot\Image\avrora.png" />
+    <None Include="wwwroot\Image\ermitazh-top.png" />
+    <None Include="wwwroot\Image\ermitazh1.png" />
+    <None Include="wwwroot\Image\ermitazh2.png" />
+    <None Include="wwwroot\Image\ermitazh3.png" />
+    <None Include="wwwroot\Image\ermitazh4.png" />
+    <None Include="wwwroot\Image\ermitazh5.png" />
+    <None Include="wwwroot\Image\ermitazh6.png" />
+    <None Include="wwwroot\Image\isakiy.png" />
+    <None Include="wwwroot\Image\Petersburg.png" />
+    <None Include="wwwroot\Image\petropavlovskaya.png" />
+    <None Include="wwwroot\Image\smolniy.png" />
+    <None Include="wwwroot\Image\zimny.png" />
+    <None Include="wwwroot\Image\zinger.png" />
+    <None Include="wwwroot\Image\Байкал.png" />
+    <None Include="wwwroot\Image\Казань.png" />
+    <None Include="wwwroot\Image\Карелия.png" />
+    <None Include="wwwroot\Image\лого.png" />
+    <None Include="wwwroot\Image\Москва.png" />
+    <None Include="wwwroot\Image\Петр Первый пнг.png" />
+    <None Include="wwwroot\Image\Петр Первый.png" />
+    <None Include="wwwroot\Image\Питер.png" />
+    <None Include="wwwroot\Image\Фон.png" />
+    <None Include="wwwroot\Image\Ярославль.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
