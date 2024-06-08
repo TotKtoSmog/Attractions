@@ -26,3 +26,7 @@ body {
     width: 100%;
     height: auto;
 }
+
+.background-gradient {
+    background: linear-gradient(to bottom right, #7DE2FC, #B9B6E5);
+}
