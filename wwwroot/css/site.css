@@ -26,6 +26,9 @@ html {
     .img-container {
         max-width: 747px;
     }
+    .navbar-brand {
+        font-size: 15px;
+    }
 }
 @media all and (min-width: 340px) and (max-width: 747px) {
     h1 {
@@ -36,6 +39,9 @@ html {
     }
     .img-container {
         max-width: 359px;
+    }
+    .navbar-brand{
+        font-size:13px;
     }
 }
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
