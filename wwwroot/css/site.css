@@ -44,6 +44,19 @@ html {
         font-size:13px;
     }
 }
+
+@media(hover: hover){
+    .items .item:hover img {
+        -webkit-filter: brightness(30%);
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+        transition: all 1s ease;
+    }
+}
+
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -125,14 +138,6 @@ body {
     height: 100%;
 }
 
-.items .item:hover img {
-    -webkit-filter: brightness(30%);
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    transition: all 1s ease;
-}
 .centered {
     position: absolute;
     top: 50%;
