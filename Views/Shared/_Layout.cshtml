@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Attractions.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header class="kiwi-maru-regular">
-        <nav class="background-gradient navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="background-gradient navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container-fluid">
 
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -42,8 +43,8 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3 mx-0">
+    <div>
+        <main role="main">
             @RenderBody()
         </main>
     </div>
