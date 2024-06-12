@@ -69,7 +69,15 @@ html {
 body {
   margin-bottom: 60px;
 }
-
+.cat {
+    white-space: pre;
+    margin-right:5px;
+}
+.footer div {
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+}
 .image-fit-cover {
     object-fit: cover;
     width: 100%;
