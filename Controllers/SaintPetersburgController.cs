@@ -6,5 +6,7 @@ namespace Attractions.Controllers
     {
         public IActionResult Index() 
             =>  View("/Views/City/SaintPetersburg/Index.cshtml");
+        public IActionResult Hermitage() 
+            => View("/Views/City/SaintPetersburg/Hermitage.cshtml");
     }
 }

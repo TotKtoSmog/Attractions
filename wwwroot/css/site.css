@@ -54,6 +54,9 @@ html {
         -ms-transition: all 1s ease;
         transition: all 1s ease;
     }
+    .item-foto-n-h img:hover {
+        transform: scale(1.2);
+    }
 }
 
 
@@ -124,6 +127,20 @@ body {
     column-gap: 30px;
     row-gap: 20px;
 }
+.item-foto-n-h {
+    width: 359px;
+    min-height: 184px;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    transition: 0.2s;
+    position: relative;
+}
+.item-foto-n-h img {
+    transition: 1s;
+    display: block;
+}
+
 .item {
     width: 359px;
     min-height: 184px;
