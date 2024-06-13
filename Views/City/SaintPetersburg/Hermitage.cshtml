@@ -21,7 +21,9 @@
             Вторник, пятница, суббота<br>
             11:00 – 20:00 Последний сеанс: 18:00
         </p>
-        <a href="https://tickets.hermitagemuseum.org/?id=3&sid=1">Купить билет</a>
+        <div class="btn-container">
+            <a href="https://tickets.hermitagemuseum.org/?id=3&sid=1" class="btn btn-2">Купить билет</a>
+        </div>
     </div>
 </div>
 <div class="items py-5 text-center">
@@ -47,5 +49,23 @@
     </div>
     <div class="item-foto-n-h">
         <img src="~/Image/ermitazh6.png" alt="Эрмитаж 6">
+    </div>
+</div>
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+        
+        
+        <form class="form-reviews" action="/" method="post">
+            <div class="form-group">
+                <br><label>Представтесь</label></br>
+                <input class="mb-1" name="UserName" type="text"/>
+                <textarea class="form-control" placeholder="Ваш отзыв" name="TextMessage"></textarea>
+                <button class="btn-container btn btn-2" type="submit" >
+                    Отправить
+                </button>
+            </div>
+        </form>
+        
     </div>
 </div>

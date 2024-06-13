@@ -57,6 +57,9 @@ html {
     .item-foto-n-h img:hover {
         transform: scale(1.2);
     }
+    .btn:hover {
+        background-position: right center;
+    }
 }
 
 
@@ -186,4 +189,37 @@ body {
 
 .city-main-img {
     width: 80%;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 15vw;
+    min-height: 5vh;
+}
+.btn {
+    flex: 1 1 auto;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 5px;
+}
+.btn-2 {
+    background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+}
+
+.form-reviews {
+    border-style: solid;
+    border-color: gainsboro;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
 }
