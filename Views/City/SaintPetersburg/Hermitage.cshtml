@@ -59,8 +59,17 @@
         <form class="form-reviews" action="/" method="post">
             <div class="form-group">
                 <br><label>Представтесь</label></br>
-                <input class="mb-1" name="UserName" type="text"/>
+                <input class="mb-2" name="UserName" type="text"/>
                 <textarea class="form-control" placeholder="Ваш отзыв" name="TextMessage"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="star_rating" checked>
+                        <input type="radio" class="star" id="two" value="2" name="star_rating">
+                        <input type="radio" class="star" id="three" value="3" name="star_rating">
+                        <input type="radio" class="star" id="four" value="4" name="star_rating">
+                        <input type="radio" class="star" id="five" value="5" name="star_rating">
+                    </div>
+                </div>
                 <button class="btn-container btn btn-2" type="submit" >
                     Отправить
                 </button>
