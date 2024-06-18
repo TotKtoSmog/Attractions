@@ -51,24 +51,28 @@
         <img src="~/Image/ermitazh6.png" alt="Эрмитаж 6">
     </div>
 </div>
+
 <div class="img-container mb-5">
     <div class="mx-5">
         <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
         
         
-        <form class="form-reviews" action="/" method="post">
+        <form method="post" class="form-reviews" asp-controller="SaintPetersburg" asp-action="Hermitage">
             <div class="form-group">
-                <br><label>Представтесь</label></br>
-                <input class="mb-2" name="UserName" type="text"/>
-                <textarea class="form-control" placeholder="Ваш отзыв" name="TextMessage"></textarea>
+                <input type="hidden" name="Id_Sight" value="1" />
+                <a href="c:\users\totkt\source\repos\attractions\models\dbomodels\sight.cs"></a>
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
                 <div class="stars">
                     <div class="star-group">
-                        <input type="radio" class="star" id="one" value="1" name="star_rating" checked>
-                        <input type="radio" class="star" id="two" value="2" name="star_rating">
-                        <input type="radio" class="star" id="three" value="3" name="star_rating">
-                        <input type="radio" class="star" id="four" value="4" name="star_rating">
-                        <input type="radio" class="star" id="five" value="5" name="star_rating">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
                     </div>
+                    
                 </div>
                 <button class="btn-container btn btn-2" type="submit" >
                     Отправить
