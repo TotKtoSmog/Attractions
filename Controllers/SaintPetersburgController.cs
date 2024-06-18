@@ -3,6 +3,8 @@ using Attractions.Models.dtoModels;
 using Attractions.Dbcontext;
 using System.Diagnostics;
 using Attractions.Models;
+using Attractions.Models.dboModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Attractions.Controllers
 {
@@ -17,8 +19,11 @@ namespace Attractions.Controllers
         }
         public IActionResult Index() 
             =>  View("/Views/City/SaintPetersburg/Index.cshtml");
-        public IActionResult Hermitage() 
-            => View("/Views/City/SaintPetersburg/Hermitage.cshtml");
+        public async Task<IActionResult> Hermitage()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 1).ToListAsync();
+            return View("/Views/City/SaintPetersburg/Hermitage.cshtml", feedbacks);
+        }
         [HttpPost]
         public IActionResult Hermitage(dtoFeedback feedback)
         {

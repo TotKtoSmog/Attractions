@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Эрмитаж";
 }
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
 <div class="img-container my-5">
     <img class="city-main-img" src="/Image/ermitazh-top.png" />
     <div class="mx-5">
@@ -54,7 +55,7 @@
 
 <div class="img-container mb-5">
     <div class="mx-5">
-        <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
         
         
         <form method="post" class="form-reviews" asp-controller="SaintPetersburg" asp-action="Hermitage">
@@ -79,6 +80,23 @@
                 </button>
             </div>
         </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+                
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
         
     </div>
 </div>
