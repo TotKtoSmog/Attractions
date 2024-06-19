@@ -30,7 +30,7 @@ namespace Attractions.Controllers
             if(feedback.NameSender != null)
             {
                 _context.Feedback.Add(
-                    new Models.dboModels.Feedback
+                    new Feedback
                     {
                         Id_Sight = feedback.Id_Sight,
                         NameSender = feedback.NameSender,
@@ -40,7 +40,7 @@ namespace Attractions.Controllers
                     );
                 _context.SaveChanges();
             }
-            return View("/Views/City/SaintPetersburg/Hermitage.cshtml");
+            return  RedirectToAction("Hermitage");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
