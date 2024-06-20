@@ -224,6 +224,13 @@ body {
     margin-bottom: 10px;
 }
 
+.bottom-right {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    color: white;
+}
+
 /*
 Работа с рейтингом
 */
