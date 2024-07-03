@@ -19,11 +19,14 @@
 - описание страниц со скриншотами;
 - тестирование (представление работы).
 
+# Макеты страниц
+[Ссылка на макеты Figma](https://www.figma.com/design/MoOSkNC9H0wsCYRcCJPISr/%D0%98%D1%82%D0%BE%D0%B3%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82?node-id=0-1&t=3qe4GFzF8wNxUJmO-1 "Ссылка на макеты") 
+
 # Структура  БД
 
 ## Схема БД
 
-![Untitled](https://github.com/TotKtoSmog/Attractions/assets/61620222/2f234fbe-ed5c-4159-962d-32018103770a)
+![Untitled](https://github.com/TotKtoSmog/Attractions/assets/61620222/0b9d1859-d53d-4012-8ecc-4477c78bb50a)
 
 ## Создание сущностей
 
@@ -72,6 +75,7 @@ CREATE TABLE Feedback
   FeedbackText TEXT,
   Ball NUMERIC,
   Accepted BOOLEAN,
+  Feedback_datatime TIMESTAMP,
   Id_sight INTEGER REFERENCES sight(id) NOT NULL,
   Id_users INTEGER REFERENCES users(id) NULL
 );
