@@ -42,6 +42,32 @@ namespace Attractions.Controllers
             }
             return  RedirectToAction("Hermitage");
         }
+
+        public async Task<IActionResult> IsaacCathedral()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 2).ToListAsync();
+            return View("/Views/City/SaintPetersburg/IsaacCathedral.cshtml", feedbacks);
+        }
+
+        [HttpPost]
+        public IActionResult IsaacCathedral(dtoFeedback feedback)
+        {
+            if (feedback.NameSender != null)
+            {
+                _context.Feedback.Add(
+                    new Feedback
+                    {
+                        Id_Sight = feedback.Id_Sight,
+                        NameSender = feedback.NameSender,
+                        FeedBackText = feedback.FeedBackText,
+                        Ball = feedback.Ball
+                    }
+                    );
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Hermitage");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
             => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Исаакиевский собор";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/IsaacCathedral.jpg" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Исаакиевский собор – неотъемлемая часть архитектурного облика Санкт-Петербурга. Наряду с
+            Медным всадником, Петропавловской крепостью и шпилем Адмиралтейства он является одним
+            из символов города на Неве. <br>
+            <br>
+            Собор освящен во имя святого преподобного Исаакия Далматского, в день поминовения
+            которого родился основатель города царь Петр I. Существующий ныне собор является
+            четвертым храмом, построенным в Петербурге в ознаменование дня рождения Петра.
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p><u>Музей-памятник «Исаакиевский собор»</u></p>
+        <p>
+            С 10:00 до 18:00<br>
+            (кассы с 10:00 до 17:30)<br>
+            Выходной день – среда<br>
+            11:00 – 20:00 Последний сеанс: 18:00<br>
+        </p>
+        <p><u>Колоннада Исаакиевского собора</u></p>
+        <p>
+            С 10:00 до 18:00<br>
+            (с 01 мая по 30 сентября – без выходных; с 01 октября по 30 апреля выходной день –  третья среда месяца<br>
+        </p>
+        <div class="btn-container">
+            <a href="https://isaak.ticketnet.ru/?id=1&sid=1" class="btn btn-2">Купить билет</a>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Saint Isaac's Cathedral1.png" alt="Исаакиевский собор 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Saint Isaac's Cathedral2.png" alt="Исаакиевский собор 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Saint Isaac's Cathedral3.png" alt="Исаакиевский собор 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Saint Isaac's Cathedral4.png" alt="Исаакиевский собор 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Saint Isaac's Cathedral5.png" alt="Исаакиевский собор 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Saint Isaac's Cathedral6.png" alt="Исаакиевский собор 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="SaintPetersburg" asp-action="IsaacCathedral">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="2" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>
