@@ -70,6 +70,8 @@ namespace Attractions.Dbcontext
                 .HasColumnName("feedbacktext");
                 entity.Property(e => e.Ball)
                 .HasColumnName("ball");
+                entity.Property(e => e.fb_datatime)
+                .HasColumnName("feedback_datatime");
                 entity.Property(e => e.IsAccepted)
                 .HasColumnName("accepted");
                 entity.Property(e => e.Id_Sight)

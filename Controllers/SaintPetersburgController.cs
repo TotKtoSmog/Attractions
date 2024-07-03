@@ -27,22 +27,9 @@ namespace Attractions.Controllers
         [HttpPost]
         public IActionResult Hermitage(dtoFeedback feedback)
         {
-            if(feedback.NameSender != null)
-            {
-                _context.Feedback.Add(
-                    new Feedback
-                    {
-                        Id_Sight = feedback.Id_Sight,
-                        NameSender = feedback.NameSender,
-                        FeedBackText = feedback.FeedBackText,
-                        Ball = feedback.Ball
-                    }
-                    );
-                _context.SaveChanges();
-            }
+            AddFeedbackToDataBase(feedback);
             return  RedirectToAction("Hermitage");
         }
-
         public async Task<IActionResult> IsaacCathedral()
         {
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 2).ToListAsync();
@@ -52,22 +39,26 @@ namespace Attractions.Controllers
         [HttpPost]
         public IActionResult IsaacCathedral(dtoFeedback feedback)
         {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("IsaacCathedral");
+        }
+        public void AddFeedbackToDataBase(dtoFeedback feedback)
+        {
             if (feedback.NameSender != null)
             {
-                _context.Feedback.Add(
-                    new Feedback
-                    {
-                        Id_Sight = feedback.Id_Sight,
-                        NameSender = feedback.NameSender,
-                        FeedBackText = feedback.FeedBackText,
-                        Ball = feedback.Ball
-                    }
-                    );
+                _context.Feedback.Add(GetFullFeedback(feedback));
                 _context.SaveChanges();
-            }
-            return RedirectToAction("Hermitage");
+            }  
         }
-
+        public Feedback GetFullFeedback(dtoFeedback feedback)
+            => new Feedback
+            {
+                Id_Sight = feedback.Id_Sight,
+                NameSender = feedback.NameSender,
+                FeedBackText = feedback.FeedBackText,
+                Ball = feedback.Ball,
+                fb_datatime = DateTime.UtcNow,
+            };
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
             => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
