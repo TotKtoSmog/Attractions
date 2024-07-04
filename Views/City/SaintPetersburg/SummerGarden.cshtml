@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "Летний сад";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/Summer garden.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Летний сад в Санкт-Петербурге был основан в 1704 году по указанию Петра I. 
+            Сад задумывался как место для отдыха и развлечений царской семьи и приближённых 
+            ко двору. В саду были построены дворцы, фонтаны, гроты и установлены скульптуры.  <br>
+            <br>
+            В XIX веке сад стал доступен для широкой публики и превратился в популярное место для 
+            прогулок и отдыха.
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Летний сад открыт по понедельникам, средам, четвергам, пятницам, субботам и воскресеньям с 10:00 до 22:00.<br>
+        </p>
+        <p><b>Адрес: Санкт-Петербург, Летний сад</b></p>
+        <div class="btn-container">
+            <b class="btn btn-2">Вход свободный</b>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Summer garden1.png" alt="Летний сад 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Summer garden2.png" alt="Летний сад 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Summer garden3.png" alt="Летний сад 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Summer garden4.png" alt="Летний сад 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Summer garden5.png" alt="Летний сад 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Summer garden6.png" alt="Летний сад 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="SaintPetersburg" asp-action="SummerGarden">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="5" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>

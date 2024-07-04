@@ -22,7 +22,6 @@
     <None Include="wwwroot\Image\petropavlovskaya.png" />
     <None Include="wwwroot\Image\smolniy.png" />
     <None Include="wwwroot\Image\zimny.png" />
-    <None Include="wwwroot\Image\zinger.png" />
     <None Include="wwwroot\Image\Байкал.png" />
     <None Include="wwwroot\Image\Казань.png" />
     <None Include="wwwroot\Image\Карелия.png" />

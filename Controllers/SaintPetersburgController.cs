@@ -69,6 +69,18 @@ namespace Attractions.Controllers
             return RedirectToAction("SmolnyCathedral");
         }
 
+        public async Task<IActionResult> SummerGarden()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 5).ToListAsync();
+            return View("/Views/City/SaintPetersburg/SummerGarden.cshtml", feedbacks);
+        }
+
+        [HttpPost]
+        public IActionResult SummerGarden(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("SummerGarden");
+        }
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {
             if (feedback.NameSender != null)
