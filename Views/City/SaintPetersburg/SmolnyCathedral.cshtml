@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Смольный собор";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/Smolny Cathedral.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Смольный собор в Санкт-Петербурге был заложен в 1748 году по приказу императрицы 
+            Елизаветы Петровны. Строительство велось под руководством архитектора Ф. Б. Растрелли 
+            в стиле барокко. Однако в 1757 году работы были приостановлены из-за сокращения 
+            финансирования. Завершение строительства произошло уже при Екатерине II под руководством 
+            архитектора Ю. М. Фельтена. <br>
+            <br>
+            Собор был освящён в 1835 году и получил название Собор всех учебных заведений.
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Храм открыт ежедневно с 07:00 до 20:00.<br>
+        </p>
+        <p><b>Адрес: площадь Растрелли, 1, Санкт-Петербург</b></p>
+        <div class="btn-container">
+            <b class="btn btn-2">Вход свободный</b>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Smolny Cathedral1.png" alt="Смольный собор 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Smolny Cathedral2.png" alt="Смольный собор 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Smolny Cathedral3.png" alt="Смольный собор 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Smolny Cathedral4.png" alt="Смольный собор 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Smolny Cathedral5.png" alt="Смольный собор 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Smolny Cathedral6.png" alt="Смольный собор 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="SaintPetersburg" asp-action="SmolnyCathedral">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="4" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>

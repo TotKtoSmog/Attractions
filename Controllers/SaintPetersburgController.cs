@@ -56,6 +56,19 @@ namespace Attractions.Controllers
             return RedirectToAction("PeterPavelFortress");
         }
 
+        public async Task<IActionResult> SmolnyCathedral()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 4).ToListAsync();
+            return View("/Views/City/SaintPetersburg/SmolnyCathedral.cshtml", feedbacks);
+        }
+
+        [HttpPost]
+        public IActionResult SmolnyCathedral(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("SmolnyCathedral");
+        }
+
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {
             if (feedback.NameSender != null)
