@@ -96,7 +96,7 @@ INSERT INTO Sight(SightName, Id_city) VALUES
   ('Исакиевский собор', 2),
   ('Петропавловская крепость', 2),
   ('Смольный собор', 2),
-  ('Дом зингера', 2),
+  ('Летний сад', 2),
   ('Крейсер Аврора', 2);
 INSERT INTO Users (FirstName, LastName, Email, Age) VALUES
   ('Иванов', 'Иван','21312@mail.ru', 34);
