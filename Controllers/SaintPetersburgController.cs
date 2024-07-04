@@ -42,6 +42,20 @@ namespace Attractions.Controllers
             AddFeedbackToDataBase(feedback);
             return RedirectToAction("IsaacCathedral");
         }
+
+        public async Task<IActionResult> PeterPavelFortress()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 3).ToListAsync();
+            return View("/Views/City/SaintPetersburg/PeterPavelFortress.cshtml", feedbacks);
+        }
+
+        [HttpPost]
+        public IActionResult PeterPavelFortress(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("PeterPavelFortress");
+        }
+
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {
             if (feedback.NameSender != null)

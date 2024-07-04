@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Петропавловская крепость";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/Peter-Pavel Fortress.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Петропавловская крепость была основана в 1703 году по приказу царя Петра I. 
+            Она была заложена на Заячьем острове реки Невы и должна была защищать завоевания 
+            России в ходе Северной войны.Планировка крепости соответствует фортификационной 
+            системе С. Ле Претр де Вобана.  <br>
+            <br>
+            Первые укрепления были дерево-земляными, затем они были заменены кирпичными стенами. 
+            В 1712 году был построен Петропавловский собор, который стал центром архитектурного 
+            ансамбля крепости.
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Музей работает ежедневно, кроме среды. <br>
+            Внимание! С 1 мая по 30 сентября по средам открыты
+            Петропавловский собор с Великокняжеской усыпальницей и тюрьма
+            Трубецкого бастиона. <br>
+        </p>
+        <p><b>Адрес: Территория Петропавловская крепость, 3Ч, Санкт-Петербург</b></p>
+        <div class="btn-container">
+            <a href="https://www.spbmuseum.ru/themuseum/visitors/buy_ticket.php" class="btn btn-2">Купить билет</a>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Peter-Pavel Fortress1.png" alt="Петропавловская крепость 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Peter-Pavel Fortress2.png" alt="Петропавловская крепость 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Peter-Pavel Fortress3.png" alt="Петропавловская крепость 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Peter-Pavel Fortress4.png" alt="Петропавловская крепость 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Peter-Pavel Fortress5.png" alt="Петропавловская крепость 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Peter-Pavel Fortress6.png" alt="Петропавловская крепость 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="SaintPetersburg" asp-action="PeterPavelFortress">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="3" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>
