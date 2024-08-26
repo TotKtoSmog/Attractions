@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Крейсер Аврора";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/cruiser Aurora.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Крейсер «Аврора» — это корабль 1-го ранга Балтийского флота, названный в честь парусного фрегата «Аврора», 
+            прославившегося при обороне Петропавловска-Камчатского в годы Крымской войны. Крейсер участвовал в 
+            русско-японской и Первой мировой войнах. Во время Октябрьской революции холостой выстрел с «Авроры» послужил 
+            сигналом к штурму Зимнего дворца.  <br>
+            <br>
+            С 1948 года корабль находится на вечной стоянке у Петроградской набережной.
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Режим работы: с 11:00 до 18:00<br>
+            Выходные дни - понедельник, вторник.<br>
+        </p>
+        <p><b>Адрес: Санкт-Петербург, Петроградская набережная</b></p>
+        <div class="btn-container">
+            <a href="https://navalmuseum.ru/bay_ticket#text" class="btn btn-2">Купить билет</a>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/cruiser Aurora1.png" alt="Летний сад 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/cruiser Aurora2.png" alt="Летний сад 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/cruiser Aurora3.png" alt="Летний сад 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/cruiser Aurora4.png" alt="Летний сад 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/cruiser Aurora5.png" alt="Летний сад 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/cruiser Aurora6.png" alt="Летний сад 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+        <form method="post" class="form-reviews" asp-controller="SaintPetersburg" asp-action="CruiserAurora">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="6" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>

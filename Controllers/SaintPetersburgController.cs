@@ -76,6 +76,19 @@ namespace Attractions.Controllers
         }
 
         [HttpPost]
+        public IActionResult CruiserAurora(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("CruiserAurora");
+        }
+
+        public async Task<IActionResult> CruiserAurora()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 6).ToListAsync();
+            return View("/Views/City/SaintPetersburg/CruiserAurora.cshtml", feedbacks);
+        }
+
+        [HttpPost]
         public IActionResult SummerGarden(dtoFeedback feedback)
         {
             AddFeedbackToDataBase(feedback);
