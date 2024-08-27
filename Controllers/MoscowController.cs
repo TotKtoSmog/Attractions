@@ -31,6 +31,17 @@ namespace Attractions.Controllers
             AddFeedbackToDataBase(feedback);
             return RedirectToAction("RedSquare");
         }
+        public async Task<IActionResult> BolshoiTheater()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 8).ToListAsync();
+            return View("/Views/City/Moscow/BolshoiTheater.cshtml", feedbacks);
+        }
+        [HttpPost]
+        public IActionResult BolshoiTheater(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("BolshoiTheater");
+        }
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {
             if (feedback.NameSender != null)
