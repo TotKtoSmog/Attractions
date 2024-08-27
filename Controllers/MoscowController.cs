@@ -19,6 +19,18 @@ namespace Attractions.Controllers
         }
         public IActionResult Index()
             => View("/Views/City/Moscow/Index.cshtml");
+
+        public async Task<IActionResult> RedSquare()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 7).ToListAsync();
+            return View("/Views/City/Moscow/RedSquare.cshtml", feedbacks);
+        }
+        [HttpPost]
+        public IActionResult RedSquare(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("RedSquare");
+        }
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {
             if (feedback.NameSender != null)

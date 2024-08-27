@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Красная площадь";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/Red Square in Moscow.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Московский Кремль — это крепость в центре Москвы, древнейшая часть города и его исторический центр. 
+            Он расположен на высоком левом берегу Москвы-реки, Боровицком холме, и является официальной резиденцией 
+            президента Российской Федерации.  <br>
+            <br>
+            Кремль представляет собой неправильный треугольник площадью 27,5 гектара. Южная стена обращена к Москве-реке, 
+            северо-западная — к Александровскому саду, а восточная — к Красной площади. В Кремле находятся архитектурные памятники, 
+            такие как стены и башни, соборы, дворцовые постройки и площади.
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Красная площадь в Москве работает круглосуточно.<br>
+        </p>
+        <p><b>Адрес: Москва, Красная площадь</b></p>
+        <div class="btn-container">
+            <b class="btn btn-2">Вход свободный</b>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Red Square1.png" alt="Красная площадь 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Red Square2.png" alt="Красная площадь 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Red Square3.png" alt="Красная площадь 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Red Square4.png" alt="Красная площадь 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Red Square5.png" alt="Красная площадь 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/Red Square6.png" alt="Красная площадь 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="Moscow" asp-action="RedSquare">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="7" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>
