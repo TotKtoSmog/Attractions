@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "ВДНХ";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/VDNH header.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            ВДНХ — это Всероссийский выставочный центр, который раньше назывался ВДНХ СССР. 
+            Это музей под открытым небом, где расположено более 20 музеев, лектории, 
+            зоны для велосипедистов и пешеходов, радиокомплекс, аттракционы, контактный 
+            зоопарк и научно-популярные центры. <br>
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Время работы ВДНХ зависит от конкретного объекта или мероприятия. 
+            Например, Центр «Космонавтика и авиация» работает с 11:00 до 21:00, 
+            понедельник — выходной.
+            <br>
+        </p>
+        <p><b>Адрес: просп. Мира, 119В</b></p>
+        <div class="btn-container">
+            <a href="https://vdnh.ru/selections/kupit-bilet/" class="btn btn-2">Купить билет</a>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/VDNH1.png" alt="ВДНХ 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/VDNH2.png" alt="ВДНХ 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/VDNH3.png" alt="ВДНХ 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/VDNH4.png" alt="ВДНХ 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/VDNH5.png" alt="ВДНХ 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/VDNH6.png" alt="ВДНХ 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="Moscow" asp-action="VDNH">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="9" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>

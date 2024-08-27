@@ -42,6 +42,18 @@ namespace Attractions.Controllers
             AddFeedbackToDataBase(feedback);
             return RedirectToAction("BolshoiTheater");
         }
+
+        public async Task<IActionResult> VDNH()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 9).ToListAsync();
+            return View("/Views/City/Moscow/VDNH.cshtml", feedbacks);
+        }
+        [HttpPost]
+        public IActionResult VDNH(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("VDNH");
+        }
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {
             if (feedback.NameSender != null)
