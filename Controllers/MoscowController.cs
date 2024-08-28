@@ -19,7 +19,7 @@ namespace Attractions.Controllers
         }
         public IActionResult Index()
             => View("/Views/City/Moscow/Index.cshtml");
-
+        
         public async Task<IActionResult> RedSquare()
         {
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 7).ToListAsync();
@@ -53,6 +53,18 @@ namespace Attractions.Controllers
         {
             AddFeedbackToDataBase(feedback);
             return RedirectToAction("VDNH");
+        }
+
+        public async Task<IActionResult> MoscowCity()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 10).ToListAsync();
+            return View("/Views/City/Moscow/MoscowCity.cshtml", feedbacks);
+        }
+        [HttpPost]
+        public IActionResult MoscowCity(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("MoscowCity");
         }
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {

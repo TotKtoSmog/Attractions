@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "Москва Сити";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/MoscowCityHeader.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Москва-Сити — это современный архитектурный комплекс небоскрёбов из стекла и бетона,
+            расположенный на Краснопресненской набережной. Высота зданий варьируется от 27 до 96 этажей.
+            Здесь находятся офисы крупных компаний, выставочный центр и разнообразные объекты сферы услуг.
+            В Москва-Сити есть три смотровые площадки, с которых открываются потрясающие виды на столицу. <br>
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Проход к зданиям открыт круглосуточно.<br>
+        </p>
+        <p><b>Адрес: Пресненская наб., 10, стр. 1</b></p>
+        <div class="btn-container">
+            <b class="btn btn-2">Вход свободный</b>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowCity1.png" alt="Москва Сити 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowCity2.png" alt="Москва Сити 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowCity3.png" alt="Москва Сити 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowCity4.png" alt="Москва Сити 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowCity5.png" alt="Москва Сити 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowCity6.png" alt="Москва Сити 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="Moscow" asp-action="MoscowCity">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="10" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>
