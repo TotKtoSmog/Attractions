@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Московское метро";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/MoscowMetroHeader.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Московское метро — это одна из самых красивых и удобных систем общественного транспорта в мире.
+            Оно состоит из 15 линий общей протяжённостью около 450 километров. Самая длинная линия — 
+            Большаякольцевая, её длина составляет около 60 километров. Московское метро включает 258 станций,
+            среди которых есть станции-дворцы, украшенные витражами, колоннами, пышными люстрами и мозаиками.<br>
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Музей метро: ежедневно с 10:00 до 18:00<br>
+        </p>
+        <p><b>Адрес: Деловой центр, второй ярус станции (первый вагон из центра)</b></p>
+        <div class="btn-container">
+            <a href="https://tour.mosmetro.ru/" class="btn btn-2">Купить билет</a>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowMetro1.png" alt="Московское метро 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowMetro2.png" alt="Московское метро 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowMetro3.png" alt="Московское метро 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowMetro4.png" alt="Московское метро 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowMetro5.png" alt="Московское метро 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowMetro6.png" alt="Московское метро 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+        <form method="post" class="form-reviews" asp-controller="Moscow" asp-action="MoscowMetro">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="12" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+    </div>
+</div>
