@@ -66,6 +66,18 @@ namespace Attractions.Controllers
             AddFeedbackToDataBase(feedback);
             return RedirectToAction("MoscowCity");
         }
+
+        public async Task<IActionResult> MoscowZoo()
+        {
+            List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 11).ToListAsync();
+            return View("/Views/City/Moscow/MoscowZoo.cshtml", feedbacks);
+        }
+        [HttpPost]
+        public IActionResult MoscowZoo(dtoFeedback feedback)
+        {
+            AddFeedbackToDataBase(feedback);
+            return RedirectToAction("MoscowZoo");
+        }
         public void AddFeedbackToDataBase(dtoFeedback feedback)
         {
             if (feedback.NameSender != null)

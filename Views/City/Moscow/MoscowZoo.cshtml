@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Московский зоопарк";
+}
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<div class="img-container my-5">
+    <img class="city-main-img" src="/Image/MoscowZooHeader.png" />
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Немного из истории</h2>
+        <p>
+            Московский зоопарк — один из старейших зоопарков в Европе, основан в 1864 году.
+            Его площадь составляет 21,65 гектара, а количество животных — 10 531 особь
+            (по состоянию на 1 января 2019 года). В коллекции зоопарка представлено 1267 видов животных. <br>
+            Московский зоопарк входит в десятку самых посещаемых зоопарков мира,
+            его ежегодно посещают около 3,8 миллиона человек.<br>
+        </p>
+        <h2 class="kiwi-maru-regular text-center my-5">Время работы</h2>
+        <p>
+            Летний график работы: ежедневно с 7:30-21:00<br>
+        </p>
+        <p><b>Адрес: Большая Грузинская ул., 1, стр. 1, Москва</b></p>
+        <div class="btn-container">
+            <a href="https://moscowzoo.ru/visitors/tickets" class="btn btn-2">Купить билет</a>
+        </div>
+    </div>
+</div>
+<div class="items py-5 text-center">
+    <div class="item-center">
+        <h2 class="kiwi-maru-regular text-center">
+            Фотографии
+        </h2>
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowZoo1.png" alt="Московский зоопарк 1">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowZoo2.png" alt="Московский зоопарк 2">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowZoo3.png" alt="Московский зоопарк 3">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowZoo4.png" alt="Московский зоопарк 4">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowZoo5.png" alt="Московский зоопарк 5">
+    </div>
+    <div class="item-foto-n-h">
+        <img src="~/Image/MoscowZoo6.png" alt="Московский зоопарк 6">
+    </div>
+</div>
+
+<div class="img-container mb-5">
+    <div class="mx-5">
+        <h2 class="kiwi-maru-regular text-center my-5">Поделитесь мнением</h2>
+
+
+        <form method="post" class="form-reviews" asp-controller="Moscow" asp-action="MoscowZoo">
+            <div class="form-group">
+                <input type="hidden" name="Id_Sight" value="11" />
+                <br><label>Представтесь</label><br>
+                <input class="mb-2" name="NameSender" type="text" />
+                <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
+                <div class="stars">
+                    <div class="star-group">
+                        <input type="radio" class="star" id="one" value="1" name="Ball" checked>
+                        <input type="radio" class="star" id="two" value="2" name="Ball">
+                        <input type="radio" class="star" id="three" value="3" name="Ball">
+                        <input type="radio" class="star" id="four" value="4" name="Ball">
+                        <input type="radio" class="star" id="five" value="5" name="Ball">
+                    </div>
+
+                </div>
+                <button class="btn-container btn btn-2" type="submit">
+                    Отправить
+                </button>
+            </div>
+        </form>
+        <div>
+            <h2 class="kiwi-maru-regular text-center my-5">Отзывы</h2>
+            <table class="table table-info">
+
+                <tbody>
+                    @foreach (var mes in Model)
+                    {
+                        <tr>
+                            <td>@mes.NameSender</td>
+                            <td>@mes.fb_datatime.ToShortDateString()</td>
+                            <td>@mes.FeedBackText</td>
+                            <td>@mes.Ball</td>
+                        </tr>
+                    }
+                </tbody>
+                <caption>>:^) Всего: @Model.Count()</caption>
+            </table>
+        </div>
+
+    </div>
+</div>
