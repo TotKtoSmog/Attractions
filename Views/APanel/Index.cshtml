@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Админ панель";
+}
+<form asp-action="Index">
+    <div class="form-group">
+        <label class="control-label"></label>
+        <input type="submit" asp-action="Authorization" value="Авторизоваться в админ панеле" class="btn btn-primary" />
+        <input type="submit" asp-action="Registration" value="Запросить доступ к админ панеле" class="btn btn-primary" />
+
+    </div>
+</form>

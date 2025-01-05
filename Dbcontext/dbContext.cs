@@ -34,10 +34,12 @@ namespace Attractions.Dbcontext
                 .HasColumnName("email")
                 .HasMaxLength(30);
                 entity.Property(e => e.Password)
-                .HasColumnName("passwordhash")
+                .HasColumnName("password")
                 .HasMaxLength(120);
                 entity.Property(e => e.Age)
                 .HasColumnName("age");
+                entity.Property(e => e.UserType)
+                .HasColumnName("usertype");
             });
             modelBuilder.Entity<City>(entity => 
             {
