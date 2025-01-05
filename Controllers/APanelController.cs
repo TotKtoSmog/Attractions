@@ -61,9 +61,14 @@ namespace Attractions.Controllers
             if (!wrapper.IsError)
             {
                 User? _u = await _context.Users.Where(u => u.Password == password && u.Email == email).SingleOrDefaultAsync();
-
+                
                 if (_u == null) wrapper.SetErrorMessage("Пользователь не найден!!!!");
-                else wrapper = new UserAuthorizationWrapper(_u);
+                else
+                {
+                    wrapper = new UserAuthorizationWrapper(_u);
+                    if (!_u.UserType) wrapper.SetErrorMessage("Вы не являетесь администратором");
+                }
+
             }
             
             return wrapper;
