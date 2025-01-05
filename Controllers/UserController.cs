@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Attractions.Models.dtoModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Cryptography.Xml;
 
 namespace Attractions.Controllers
 {
@@ -16,6 +18,22 @@ namespace Attractions.Controllers
 
         private readonly ILogger<UserController> _logger;
         private readonly dbContext _context;
+        public async Task<IActionResult> Account()
+        {
+            string email = Request.Cookies[KeyLogin] ?? "";
+            string password = Request.Cookies[KeyPassword] ?? "";
+
+            User? _user = await _context.Users.Where(u => u.Email == email && u.Password == password && u.UserType).FirstOrDefaultAsync();
+            if (_user == null)
+            {
+                return LogOut();
+            }
+            else
+            {
+                ViewData["name"] = _user.LastName;
+            }
+            return View();
+        }
         public UserController(ILogger<UserController> logger, dbContext context)
         {
             _logger = logger;
@@ -43,9 +61,17 @@ namespace Attractions.Controllers
             else if (!authorizationWrapper.IsWarning)
             {
                 SaveCooKie(authorizationWrapper.User);
-                return View(userModel);
+                return RedirectToAction("Account", new { controller = "User", action = "Account" });
             }
             return View();
+        }
+        public IActionResult LogOut()
+        {
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Append(KeyLogin, "", options);
+            Response.Cookies.Append(KeyPassword, "", options);
+            return RedirectToAction("Authorization");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -55,7 +55,7 @@ namespace Attractions.Controllers
             string password = Request.Cookies[KeyPassword] ?? "";
 
             User? _user = await _context.Users.Where(u => u.Email == email && u.Password == password && u.UserType).FirstOrDefaultAsync();
-            if (_user == null) Redirect("Authorization");
+            if (_user == null) return LogOut();
             else
             {
                 ViewData["name"] = _user.LastName;
@@ -94,6 +94,14 @@ namespace Attractions.Controllers
             cookieOptions.Expires = DateTime.Now.AddDays(1);
             Response.Cookies.Append(KeyLogin, _user.Email, cookieOptions);
             Response.Cookies.Append(KeyPassword, _user.Password, cookieOptions);
+        }
+        public IActionResult LogOut()
+        {
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Append(KeyLogin, "", options);
+            Response.Cookies.Append(KeyPassword, "", options);
+            return RedirectToAction("Authorization");
         }
 
     }
