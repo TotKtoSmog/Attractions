@@ -11,7 +11,7 @@ namespace Attractions.Controllers
 {
     public class APanelController : Controller
     {
-        private const string KeyLogin = "Aemail";
+        private const string KeyLogin = "AEmail";
         private const string KeyPassword = "APassword";
 
         private readonly ILogger<APanelController> _logger;
@@ -60,7 +60,8 @@ namespace Attractions.Controllers
             {
                 ViewData["name"] = _user.LastName;
             }
-            return View();
+            var fb = _context.Feedback.ToList();
+            return View(fb);
         } 
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,4 +1,95 @@
 ﻿@{
     ViewData["Title"] = "Администрирование";
 }
-<h1 class="display-4">Добро пожаловать @ViewData["name"]</h1>
+@model IEnumerable<Attractions.Models.dboModels.Feedback>
+<h5 class="display-6"> <b>@ViewData["name"]</b> добро пожаловать в панель администрирования</h5>
+
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-tabs me-3" id="nav-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Отзывы пользователей</button>
+    </div>
+    <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <h5>Отзывы пользователей</h5>
+            <table class="table table table-hover border-primary">
+                <label class="control-label">Фильтры</label>
+                <div class="d-flex justify-content-evenly">
+
+                    <form method="get" asp-action="Аccount" asp-controller="User">
+                        <div>
+                            <label class="control-label">Неподтвержденные отзывы</label>
+                            <input type="checkbox" name="Status" />
+                        </div>
+                        <button type="submit">Применить</button>
+                    </form>
+                </div>
+                <thead>
+                    <tr>
+                        <th>
+                            id
+                        </th>
+                        <th>
+                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">id Отправителя</a>
+                        </th>
+                        <th>
+                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.SenderSort="@ViewBag.SenderSort">Отправитель</a>
+                        </th>
+                        <th>
+                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.SenderSort="@ViewBag.SenderSort">Дата публикации</a>
+                        </th>
+                        <th>
+                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.HedderSort="@ViewBag.HeddrSort">Текст отзыва</a>
+                        </th>
+                        <th>
+                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">Балла</a>
+                        </th>
+                        <th>
+                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">Статус</a>
+                        </th>
+                        <th>
+                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">id Достопримечательности</a>
+                        </th>
+                        <th>
+                            Подтверждение
+                        </th>
+                        <th>
+                            Удаление
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int count = 0;
+                        @foreach (var fb in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td scope="row">@fb.Id</td>
+                                <td scope="row">@(fb.Id_User == null ? "Не авторизован" : fb.Id_User)</td>
+                                <td scope="row">@fb.NameSender</td>
+                                <td scope="row">@fb.fb_datatime</td>
+                                <td scope="row">@fb.FeedBackText</td>
+                                <td scope="row">@fb.Ball</td>
+                                <td scope="row">@fb.IsAccepted</td>
+                                <td scope="row">@fb.Id_Sight</td>
+                                <td scope="row"><button>Подтвердить</button></td>
+                                <td scope="row"><button>Удалить</button></td>
+                            </tr>
+                        }
+                        if (count == 0)
+                        {
+                            ViewData["Count_Mess"] = "Пусто >:^(";
+                        }
+                        else
+                        {
+                            ViewData["Count_Mess"] = "";
+                        }
+                        
+                    }
+                </tbody>
+            </table>
+            <h6>@ViewData["Count_Mess"]</h6>
+        </div>
+    </div>
+</div>

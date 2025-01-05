@@ -6,14 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Attractions.Models.dtoModels;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Security.Cryptography.Xml;
 
 namespace Attractions.Controllers
 {
     public class UserController : Controller
     {
-        private const string KeyLogin = "email";
+        private const string KeyLogin = "Email";
         private const string KeyPassword = "Password";
 
         private readonly ILogger<UserController> _logger;
@@ -23,7 +21,7 @@ namespace Attractions.Controllers
             string email = Request.Cookies[KeyLogin] ?? "";
             string password = Request.Cookies[KeyPassword] ?? "";
 
-            User? _user = await _context.Users.Where(u => u.Email == email && u.Password == password && u.UserType).FirstOrDefaultAsync();
+            User? _user = await _context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
             if (_user == null)
             {
                 return LogOut();
