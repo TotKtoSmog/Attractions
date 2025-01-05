@@ -44,6 +44,21 @@ namespace Attractions.Controllers
             else if (!authorizationWrapper.IsWarning)
             {
                 SaveCooKie(authorizationWrapper.User);
+                return RedirectToAction("Administration", new { controller = "APanel", action = "Administration" });
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> Administration()
+        {
+            string email = Request.Cookies[KeyLogin] ?? "";
+            string password = Request.Cookies[KeyPassword] ?? "";
+
+            User? _user = await _context.Users.Where(u => u.Email == email && u.Password == password && u.UserType).FirstOrDefaultAsync();
+            if (_user == null) Redirect("Authorization");
+            else
+            {
+                ViewData["name"] = _user.LastName;
             }
             return View();
         }
@@ -70,10 +85,8 @@ namespace Attractions.Controllers
                 }
 
             }
-            
             return wrapper;
         }
-
         public void SaveCooKie(User _user)
         {
             CookieOptions cookieOptions = new CookieOptions();
