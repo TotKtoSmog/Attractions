@@ -49,6 +49,33 @@ namespace Attractions.Controllers
             return View();
         }
 
+       
+        [HttpPost]
+        public IActionResult ChangeAcceptedFeedBack(int id)
+        {
+            try
+            {
+                var feedBack = _context.Feedback.Find(id);
+                if (feedBack == null)
+                    return NotFound();
+
+                feedBack.IsAccepted = !feedBack.IsAccepted;
+
+                if (feedBack.fb_datatime.Kind == DateTimeKind.Unspecified)
+                    feedBack.fb_datatime = DateTime.SpecifyKind(feedBack.fb_datatime, DateTimeKind.Utc);
+                else if (feedBack.fb_datatime.Kind == DateTimeKind.Local)
+                    feedBack.fb_datatime = feedBack.fb_datatime.ToUniversalTime();
+
+                _context.Feedback.Update(feedBack);
+                _context.SaveChanges();
+
+                return Json(new { isAccepted = feedBack.IsAccepted });
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
         public async Task<IActionResult> Administration()
         {
             string email = Request.Cookies[KeyLogin] ?? "";

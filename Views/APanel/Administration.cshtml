@@ -64,7 +64,7 @@
                         @foreach (var fb in Model)
                         {
                             count++;
-                            <tr>
+                            <tr id="row-@fb.Id">
                                 <td scope="row">@fb.Id</td>
                                 <td scope="row">@(fb.Id_User == null ? "Не авторизован" : fb.Id_User)</td>
                                 <td scope="row">@fb.NameSender</td>
@@ -73,7 +73,10 @@
                                 <td scope="row">@fb.Ball</td>
                                 <td scope="row">@fb.IsAccepted</td>
                                 <td scope="row">@fb.Id_Sight</td>
-                                <td scope="row"><button>Подтвердить</button></td>
+                                <td scope="row">
+                                    <button class="@(fb.IsAccepted? "btn btn-danger" : "btn btn-success")" onclick="confirmReview(@fb.Id, this)">
+                                        @(fb.IsAccepted ? "Снять подтверждение" : "Подтвердить")
+                                </button></td>
                                 <td scope="row"><button>Удалить</button></td>
                             </tr>
                         }
@@ -93,3 +96,35 @@
         </div>
     </div>
 </div>
+
+<script>
+    async function confirmReview(id, button) {
+        const response = await fetch(`/APanel/ChangeAcceptedFeedBack/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const isAccepted = data.isAccepted;
+
+            // Обновляем только нажатую кнопку
+            if (button) {
+                button.classList.toggle('btn-danger', isAccepted);
+                button.classList.toggle('btn-success', !isAccepted);
+                button.textContent = isAccepted ? 'Снять подтверждение' : ' Подтвердить';
+
+                // Обновляем статус в строке таблицы
+                const row = document.getElementById(`row-${id}`);
+                const statusCell = row ? row.children[6] : null;
+                if (statusCell) {
+                    statusCell.textContent = isAccepted ? 'True' : 'False';
+                }
+            }
+
+            alert('Комментарий обновлен!');
+        } else {
+            alert('Ошибка при обновлении комментария.');
+        }
+    }
+</script>
