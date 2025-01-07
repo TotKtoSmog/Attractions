@@ -11,7 +11,7 @@
     <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
             <h5>Отзывы пользователей</h5>
-            <table class="table table table-hover border-primary">
+            <table id="feedbackTable" class="table table table-hover border-primary">
                 <label class="control-label">Фильтры</label>
                 <div class="d-flex justify-content-evenly">
 
@@ -23,31 +23,31 @@
                         <button type="submit">Применить</button>
                     </form>
                 </div>
-                <thead>
+                <thead id="feedbackTable-Head">
                     <tr>
                         <th>
                             id
                         </th>
                         <th>
-                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">id Отправителя</a>
+                            <a href="#" onclick="sortTable('Id_User')">id Отправителя</a>
                         </th>
                         <th>
-                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.SenderSort="@ViewBag.SenderSort">Отправитель</a>
+                            <a href="#" onclick="sortTable('NameSender')">Отправитель</a>
                         </th>
                         <th>
-                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.SenderSort="@ViewBag.SenderSort">Дата публикации</a>
+                            <a href="#" onclick="sortTable('fb_datatime')">Дата публикации</a>
                         </th>
                         <th>
-                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.HedderSort="@ViewBag.HeddrSort">Текст отзыва</a>
+                            <a href="#" onclick="sortTable('FeedBackText')">Текст отзыва</a>
                         </th>
                         <th>
-                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">Балла</a>
+                            <a href="#" onclick="sortTable('Ball')">Балла</a>
                         </th>
                         <th>
-                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">Статус</a>
+                            <a href="#" onclick="sortTable('IsAccepted')">Статус</a>
                         </th>
                         <th>
-                            <a asp-action="Account" asp-controller="User" asp-route-filterVM.DateSort="@ViewBag.DataSort">id Достопримечательности</a>
+                            <a href="#" onclick="sortTable('Id_Sight')">id Достопримечательности</a>
                         </th>
                         <th>
                             Подтверждение
@@ -58,12 +58,10 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="feedbackTable-Body">
                     @{
-                        int count = 0;
                         @foreach (var fb in Model)
                         {
-                            count++;
                             <tr id="row-@fb.Id">
                                 <td scope="row">@fb.Id</td>
                                 <td scope="row">@(fb.Id_User == null ? "Не авторизован" : fb.Id_User)</td>
@@ -74,30 +72,23 @@
                                 <td scope="row">@fb.IsAccepted</td>
                                 <td scope="row">@fb.Id_Sight</td>
                                 <td scope="row">
-                                    <button class="@(fb.IsAccepted? "btn btn-danger" : "btn btn-success")" onclick="confirmReview(@fb.Id, this)">
+                                    <button class="@(fb.IsAccepted? "btn btn-warning" : "btn btn-primary")" onclick="confirmReview(@fb.Id, this)">
                                         @(fb.IsAccepted ? "Снять подтверждение" : "Подтвердить")
                                 </button></td>
-                                <td scope="row"><button>Удалить</button></td>
+                                <td scope="row"><button class="btn btn-danger" onclick="deleteReview(@fb.Id)">Удалить</button></td>
                             </tr>
                         }
-                        if (count == 0)
-                        {
-                            ViewData["Count_Mess"] = "Пусто >:^(";
-                        }
-                        else
-                        {
-                            ViewData["Count_Mess"] = "";
-                        }
-                        
                     }
                 </tbody>
             </table>
-            <h6>@ViewData["Count_Mess"]</h6>
         </div>
     </div>
 </div>
 
 <script>
+    let currentSortColumn = null;
+    let currentSortOrder = 'ASC'; // ASC или DESC
+
     async function confirmReview(id, button) {
         const response = await fetch(`/APanel/ChangeAcceptedFeedBack/${id}`, {
             method: 'POST',
@@ -108,13 +99,11 @@
             const data = await response.json();
             const isAccepted = data.isAccepted;
 
-            // Обновляем только нажатую кнопку
             if (button) {
-                button.classList.toggle('btn-danger', isAccepted);
-                button.classList.toggle('btn-success', !isAccepted);
+                button.classList.toggle('btn-warning', isAccepted);
+                button.classList.toggle('btn-primary', !isAccepted);
                 button.textContent = isAccepted ? 'Снять подтверждение' : ' Подтвердить';
 
-                // Обновляем статус в строке таблицы
                 const row = document.getElementById(`row-${id}`);
                 const statusCell = row ? row.children[6] : null;
                 if (statusCell) {
@@ -125,6 +114,74 @@
             alert('Комментарий обновлен!');
         } else {
             alert('Ошибка при обновлении комментария.');
+        }
+    }
+    
+    async function deleteReview(id) {
+        const response = await fetch(`/APanel/DeleteFeedBack/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) {
+            const row = document.getElementById(`row-${id}`);
+            if (row) {
+                row.remove();
+            }
+            alert('Комментарий удалён!');
+        } else {
+            alert('Ошибка при удалении комментария.');
+        }
+    }
+
+    async function sortTable(column) {
+        // Переключаем порядок сортировки
+        if (currentSortColumn === column) {
+            currentSortOrder = currentSortOrder === 'ASC' ? 'DESC' : 'ASC';
+        } else {
+            currentSortOrder = 'ASC';
+        }
+        currentSortColumn = column;
+
+        // Отправляем запрос на сервер
+        const response = await fetch(`/APanel/SortFeedBacks?column=${column}&order=${currentSortOrder}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) {
+            const sortedRows = await response.json();
+            const tableBody = document.getElementById('feedbackTable-Body');
+
+            // Очищаем старое содержимое `tbody`
+            tableBody.innerHTML = '';
+
+            // Создаем новые строки на основе данных с сервера
+            sortedRows.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.id = `row-${row.id}`;
+                tr.innerHTML = `
+                    <td scope="row">${row.id}</td>
+                    <td scope="row">${row.id_User ? row.id_User : "Не авторизован"}</td>
+                    <td scope="row">${row.nameSender}</td>
+                    <td scope="row">${row.fb_datatime}</td>
+                    <td scope="row">${row.feedBackText}</td>
+                    <td scope="row">${row.ball}</td>
+                    <td scope="row">${row.isAccepted}</td>
+                    <td scope="row">${row.id_Sight}</td>
+                    <td scope="row">
+                        <button class="${row.isAccepted ? "btn btn-warning" : "btn btn-primary"}" onclick="confirmReview(${row.id}, this)">
+                            ${row.isAccepted ? "Снять подтверждение" : "Подтвердить"}
+                        </button>
+                    </td>
+                    <td scope="row">
+                        <button class="btn btn-danger" onclick="deleteReview(${row.id})">Удалить</button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        } else {
+            alert('Ошибка при сортировке');
         }
     }
 </script>

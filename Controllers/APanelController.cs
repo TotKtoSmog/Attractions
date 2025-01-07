@@ -48,14 +48,13 @@ namespace Attractions.Controllers
             }
             return View();
         }
-
        
         [HttpPost]
-        public IActionResult ChangeAcceptedFeedBack(int id)
+        public async Task<IActionResult> ChangeAcceptedFeedBack(int id)
         {
             try
             {
-                var feedBack = _context.Feedback.Find(id);
+                var feedBack = await _context.Feedback.FindAsync(id);
                 if (feedBack == null)
                     return NotFound();
 
@@ -66,10 +65,61 @@ namespace Attractions.Controllers
                 else if (feedBack.fb_datatime.Kind == DateTimeKind.Local)
                     feedBack.fb_datatime = feedBack.fb_datatime.ToUniversalTime();
 
-                _context.Feedback.Update(feedBack);
-                _context.SaveChanges();
+                 _context.Feedback.Update(feedBack);
+                await _context.SaveChangesAsync();
 
                 return Json(new { isAccepted = feedBack.IsAccepted });
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFeedBack(int id)
+        {
+            try
+            {
+                var feedBack = await _context.Feedback.FindAsync(id);
+                if (feedBack == null)
+                    return NotFound();
+
+                _context.Feedback.Remove(feedBack);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult SortFeedBacks(string column, string order)
+        {
+            try
+            {
+                var feedbacks = _context.Feedback.AsQueryable();
+
+                feedbacks = order == "ASC"
+                    ? feedbacks.OrderBy(f => EF.Property<object>(f, column))
+                    : feedbacks.OrderByDescending(f => EF.Property<object>(f, column));
+
+                var result = feedbacks.Select(f => new
+                {
+                    f.Id,
+                    f.Id_User,
+                    f.NameSender,
+                    f.fb_datatime,
+                    f.FeedBackText,
+                    f.Ball,
+                    f.IsAccepted,
+                    f.Id_Sight
+                }).ToList();
+
+                return Json(result);
             }
             catch
             {
@@ -90,7 +140,7 @@ namespace Attractions.Controllers
             var fb = _context.Feedback.ToList();
             return View(fb);
         } 
-        
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
             => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
