@@ -63,6 +63,41 @@ namespace Attractions.Controllers
             }
             return View();
         }
+        public async Task<IActionResult> Registration (dtoRegistrationUser userModel)
+        {
+            if(userModel.Email == null || userModel.Password == null || userModel.FirstName == null || userModel.LastName == null)
+            {
+                return View();
+            }
+            if (userModel.Password != userModel.RepeatPassword)
+            {
+                ViewData["Registration_Error"] = "Пароли не совпадают";
+                return View(userModel);
+            }
+
+            User? _u = await _context.Users.Where(u => u.Email == userModel.Email).SingleOrDefaultAsync();
+
+            if (_u != null)
+            {
+                ViewData["Registration_Error"] = "Пользователь с таким логином уже существует";
+                return View(userModel);
+            }
+            else
+            {
+                User u = new User
+                {
+                    Age = userModel.Age,
+                    Email = userModel.Email,
+                    Password = userModel.Password,
+                    UserType = false,
+                    FirstName = userModel.FirstName,
+                    LastName = userModel.LastName,
+                };
+                await _context.Users.AddAsync(u);
+                _context.SaveChanges();
+                return RedirectToAction("Authorization", new { controller = "User", action = "Authorization" });
+            }
+        }
         public IActionResult LogOut()
         {
             CookieOptions options = new CookieOptions();

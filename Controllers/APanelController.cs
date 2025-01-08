@@ -174,7 +174,7 @@ namespace Attractions.Controllers
             if (_user == null) return LogOut();
             else
             {
-                ViewData["name"] = _user.LastName;
+                ViewData["name"] = _user.FirstName;
             }
             var fb = _context.Feedback.ToList();
             return View(fb);

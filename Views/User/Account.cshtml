@@ -1,4 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Личный кабинет";
 }
-<h1 class="display-4">Добро пожаловать @ViewData["name"]</h1>
+<div class="d-flex align-items-start">
+    <h6 class="display-6 text-center mb-5">Добро пожаловать @ViewData["name"]</h6>
+    <form asp-action="Index">
+        <input type="submit" asp-action="LogOut" value="Выйти" class="btn btn-primary" />
+    </form>
+</div>
