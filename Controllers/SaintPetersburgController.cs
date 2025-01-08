@@ -10,6 +10,7 @@ namespace Attractions.Controllers
 {
     public class SaintPetersburgController : Controller
     {
+        private const string KeyId = "Id";
         private readonly ILogger<HomeController> _logger;
         private readonly dbContext _context;
         public SaintPetersburgController(ILogger<HomeController> logger, dbContext context)
@@ -21,6 +22,13 @@ namespace Attractions.Controllers
             =>  View("/Views/City/SaintPetersburg/Index.cshtml");
         public async Task<IActionResult> Hermitage()
         {
+            string id = Request.Cookies[KeyId] ?? "";
+            if (id != "")
+            {
+                int UserId = Convert.ToInt32(id);
+                User? u = await _context.Users.FindAsync(UserId);
+                ViewData["FIO"] = $"{u.FirstName} {u.LastName}";
+            }
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 1).ToListAsync();
             return View("/Views/City/SaintPetersburg/Hermitage.cshtml", feedbacks);
         }
@@ -32,6 +40,13 @@ namespace Attractions.Controllers
         }
         public async Task<IActionResult> IsaacCathedral()
         {
+            string id = Request.Cookies[KeyId] ?? "";
+            if (id != "")
+            {
+                int UserId = Convert.ToInt32(id);
+                User? u = await _context.Users.FindAsync(UserId);
+                ViewData["FIO"] = $"{u.FirstName} {u.LastName}";
+            }
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 2).ToListAsync();
             return View("/Views/City/SaintPetersburg/IsaacCathedral.cshtml", feedbacks);
         }
@@ -45,6 +60,13 @@ namespace Attractions.Controllers
 
         public async Task<IActionResult> PeterPavelFortress()
         {
+            string id = Request.Cookies[KeyId] ?? "";
+            if (id != "")
+            {
+                int UserId = Convert.ToInt32(id);
+                User? u = await _context.Users.FindAsync(UserId);
+                ViewData["FIO"] = $"{u.FirstName} {u.LastName}";
+            }
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 3).ToListAsync();
             return View("/Views/City/SaintPetersburg/PeterPavelFortress.cshtml", feedbacks);
         }
@@ -58,6 +80,13 @@ namespace Attractions.Controllers
 
         public async Task<IActionResult> SmolnyCathedral()
         {
+            string id = Request.Cookies[KeyId] ?? "";
+            if (id != "")
+            {
+                int UserId = Convert.ToInt32(id);
+                User? u = await _context.Users.FindAsync(UserId);
+                ViewData["FIO"] = $"{u.FirstName} {u.LastName}";
+            }
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 4).ToListAsync();
             return View("/Views/City/SaintPetersburg/SmolnyCathedral.cshtml", feedbacks);
         }
@@ -71,6 +100,13 @@ namespace Attractions.Controllers
 
         public async Task<IActionResult> SummerGarden()
         {
+            string id = Request.Cookies[KeyId] ?? "";
+            if (id != "")
+            {
+                int UserId = Convert.ToInt32(id);
+                User? u = await _context.Users.FindAsync(UserId);
+                ViewData["FIO"] = $"{u.FirstName} {u.LastName}";
+            }
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 5).ToListAsync();
             return View("/Views/City/SaintPetersburg/SummerGarden.cshtml", feedbacks);
         }
@@ -84,6 +120,13 @@ namespace Attractions.Controllers
 
         public async Task<IActionResult> CruiserAurora()
         {
+            string id = Request.Cookies[KeyId] ?? "";
+            if (id != "")
+            {
+                int UserId = Convert.ToInt32(id);
+                User? u = await _context.Users.FindAsync(UserId);
+                ViewData["FIO"] = $"{u.FirstName} {u.LastName}";
+            }
             List<Feedback> feedbacks = await _context.Feedback.Where(f => f.IsAccepted && f.Id_Sight == 6).ToListAsync();
             return View("/Views/City/SaintPetersburg/CruiserAurora.cshtml", feedbacks);
         }
@@ -109,6 +152,7 @@ namespace Attractions.Controllers
                 NameSender = feedback.NameSender,
                 FeedBackText = feedback.FeedBackText,
                 Ball = feedback.Ball,
+                Id_User = int.TryParse(Request.Cookies[KeyId], out var tempUserID) ? tempUserID : null,
                 fb_datatime = DateTime.UtcNow,
             };
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

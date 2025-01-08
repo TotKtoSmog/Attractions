@@ -13,6 +13,7 @@ namespace Attractions.Controllers
     {
         private const string KeyLogin = "Email";
         private const string KeyPassword = "Password";
+        private const string KeyId = "Id";
 
         private readonly ILogger<UserController> _logger;
         private readonly dbContext _context;
@@ -104,6 +105,7 @@ namespace Attractions.Controllers
             options.Expires = DateTime.Now.AddDays(-1);
             Response.Cookies.Append(KeyLogin, "", options);
             Response.Cookies.Append(KeyPassword, "", options);
+            Response.Cookies.Append(KeyId, "", options);
             return RedirectToAction("Authorization");
         }
 
@@ -134,6 +136,7 @@ namespace Attractions.Controllers
             cookieOptions.Expires = DateTime.Now.AddDays(1);
             Response.Cookies.Append(KeyLogin, _user.Email, cookieOptions);
             Response.Cookies.Append(KeyPassword, _user.Password, cookieOptions);
+            Response.Cookies.Append(KeyId, _user.Id.ToString(), cookieOptions);
         }
     }
 }

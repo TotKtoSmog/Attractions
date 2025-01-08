@@ -60,7 +60,7 @@
             <div class="form-group">
                 <input type="hidden" name="Id_Sight" value="7" />
                 <br><label>Представтесь</label><br>
-                <input class="mb-2" name="NameSender" type="text" />
+                <input class="mb-2" name="NameSender" value="@ViewData["FIO"]" type="text" @(string.IsNullOrEmpty(ViewData["FIO"]?.ToString()) ? "" : "readonly") />
                 <textarea class="form-control" placeholder="Ваш отзыв" name="FeedBackText"></textarea>
                 <div class="stars">
                     <div class="star-group">
