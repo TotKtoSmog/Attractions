@@ -2,9 +2,17 @@
     ViewData["Title"] = "Администрирование";
 }
 @model IEnumerable<Attractions.Models.dboModels.Feedback>
-<h5 class="display-6"> <b>@ViewData["name"]</b> добро пожаловать в панель администрирования</h5>
+<div class="d-flex align-items-start">
+    <h6 class="display-6 text-center mb-5"> <b>@ViewData["name"]</b> добро пожаловать в панель администрирования</h6>
+    <form asp-action="Index">
+        <input type="submit" asp-action="LogOut" value="Выйти" class="btn btn-primary" />
+    </form>
+</div>
+
+
 
 <div class="d-flex align-items-start">
+    
     <div class="nav flex-column nav-tabs me-3" id="nav-tab" role="tablist" aria-orientation="vertical">
         <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Отзывы пользователей</button>
     </div>
@@ -13,14 +21,14 @@
             <h5>Отзывы пользователей</h5>
             <table id="feedbackTable" class="table table table-hover border-primary">
                 <label class="control-label">Фильтры</label>
-                <div class="d-flex justify-content-evenly">
+                <div class="">
 
-                    <form method="get" asp-action="Account" asp-controller="User">
-                        <div>
-                            <label class="control-label">Неподтвержденные отзывы</label>
-                            <input type="checkbox" name="Status" />
-                        </div>
-                        <button type="submit">Применить</button>
+                    <form id="filterForm">
+                        <label for="onlyAccepted">
+                            Показывать только не подтвержденные
+                            <input type="checkbox" id="onlyAccepted" name="onlyAccepted">
+                        </label>
+                        <button class="btn btn-primary" style="width: 200px;" type="submit">Применить фильтр</button>
                     </form>
                 </div>
                 <thead id="feedbackTable-Head">
@@ -60,32 +68,34 @@
 
                 <tbody id="feedbackTable-Body">
                     @{
-                        @foreach (var fb in Model)
+                            @foreach (var fb in Model)
                         {
-                            <tr id="row-@fb.Id">
-                                <td scope="row">@fb.Id</td>
-                                <td scope="row">@(fb.Id_User == null ? "Не авторизован" : fb.Id_User)</td>
-                                <td scope="row">@fb.NameSender</td>
-                                <td scope="row">@fb.fb_datatime</td>
-                                <td scope="row">@fb.FeedBackText</td>
-                                <td scope="row">@fb.Ball</td>
-                                <td scope="row">@fb.IsAccepted</td>
-                                <td scope="row">@fb.Id_Sight</td>
-                                <td scope="row">
-                                    <button class="@(fb.IsAccepted? "btn btn-warning" : "btn btn-primary")" onclick="confirmReview(@fb.Id, this)">
-                                        @(fb.IsAccepted ? "Снять подтверждение" : "Подтвердить")
-                                </button></td>
-                                <td scope="row"><button class="btn btn-danger" onclick="deleteReview(@fb.Id)">Удалить</button></td>
-                            </tr>
+                                <tr id="row-@fb.Id">
+                                    <td scope="row">@fb.Id</td>
+                                    <td scope="row">@(fb.Id_User == null ? "Не авторизован" : fb.Id_User)</td>
+                                    <td scope="row">@fb.NameSender</td>
+                                    <td scope="row">@fb.fb_datatime</td>
+                                    <td scope="row">@fb.FeedBackText</td>
+                                    <td scope="row">@fb.Ball</td>
+                                    <td scope="row">@fb.IsAccepted</td>
+                                    <td scope="row">@fb.Id_Sight</td>
+                                    <td scope="row">
+                                        <button class="@(fb.IsAccepted? "btn btn-warning" : "btn btn-success")" onclick="confirmReview(@fb.Id, this)">
+                                            @(fb.IsAccepted ? "Снять подтверждение" : "Подтвердить")
+                                    </button></td>
+                                    <td scope="row"><button class="btn btn-danger" onclick="deleteReview(@fb.Id)">Удалить</button></td>
+                                </tr>
                         }
                     }
                 </tbody>
             </table>
         </div>
     </div>
+    
 </div>
 
 <script>
+    let currentFeedbacks = [];
     let currentSortColumn = null;
     let currentSortOrder = 'ASC'; // ASC или DESC
 
@@ -101,7 +111,7 @@
 
             if (button) {
                 button.classList.toggle('btn-warning', isAccepted);
-                button.classList.toggle('btn-primary', !isAccepted);
+                button.classList.toggle('btn-success', !isAccepted);
                 button.textContent = isAccepted ? 'Снять подтверждение' : ' Подтвердить';
 
                 const row = document.getElementById(`row-${id}`);
@@ -156,32 +166,76 @@
             // Очищаем старое содержимое `tbody`
             tableBody.innerHTML = '';
 
-            // Создаем новые строки на основе данных с сервера
-            sortedRows.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.id = `row-${row.id}`;
-                tr.innerHTML = `
-                    <td scope="row">${row.id}</td>
-                    <td scope="row">${row.id_User ? row.id_User : "Не авторизован"}</td>
-                    <td scope="row">${row.nameSender}</td>
-                    <td scope="row">${row.fb_datatime}</td>
-                    <td scope="row">${row.feedBackText}</td>
-                    <td scope="row">${row.ball}</td>
-                    <td scope="row">${row.isAccepted}</td>
-                    <td scope="row">${row.id_Sight}</td>
-                    <td scope="row">
-                        <button class="${row.isAccepted ? "btn btn-warning" : "btn btn-primary"}" onclick="confirmReview(${row.id}, this)">
-                            ${row.isAccepted ? "Снять подтверждение" : "Подтвердить"}
-                        </button>
-                    </td>
-                    <td scope="row">
-                        <button class="btn btn-danger" onclick="deleteReview(${row.id})">Удалить</button>
-                    </td>
-                `;
-                tableBody.appendChild(tr);
-            });
+            updateTable(sortedRows);
         } else {
             alert('Ошибка при сортировке');
         }
+    }
+    document.getElementById('filterForm').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Предотвращаем перезагрузку страницы
+
+        const onlyAccepted = document.getElementById('onlyAccepted').checked; // Получаем состояние чекбокса
+
+        try {
+            const response = await fetch('/APanel/FilterFeedBacks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ onlyAccepted }) // Передаем состояние чекбокса в запросе
+            });
+
+            if (response.ok) {
+                const filteredFeedbacks = await response.json();
+                updateTable(filteredFeedbacks); // Обновляем таблицу с отфильтрованными данными
+            } else {
+                alert('Ошибка при фильтрации данных.');
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    });
+
+    // Функция для обновления таблицы
+    function updateTable(feedbacks) {
+        const tableBody = document.getElementById('feedbackTable-Body');
+        tableBody.innerHTML = ''; // Очищаем таблицу
+
+        feedbacks.forEach(row => {
+            const tr = document.createElement('tr');
+            
+            tr.id = `row-${row.id}`;
+            tr.innerHTML = `
+                        <td scope="row">${row.id}</td>
+                        <td scope="row">${row.id_User ? row.id_User : "Не авторизован"}</td>
+                        <td scope="row">${row.nameSender}</td>
+                        <td scope="row">${formatDate(row.fb_datatime)}</td>
+                        <td scope="row">${row.feedBackText}</td>
+                        <td scope="row">${row.ball}</td>
+                        <td scope="row">${row.isAccepted}</td>
+                        <td scope="row">${row.id_Sight}</td>
+                        <td scope="row">
+                            <button class="${row.isAccepted ? "btn btn-warning" : "btn btn-success"}" onclick="confirmReview(${row.id}, this)">
+                                ${row.isAccepted ? "Снять подтверждение" : "Подтвердить"}
+                            </button>
+                        </td>
+                        <td scope="row">
+                            <button class="btn btn-danger" onclick="deleteReview(${row.id})">Удалить</button>
+                        </td>
+                    `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    function formatDate(isoDate) {
+        const date = new Date(isoDate); // Преобразуем строку в объект Date
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
     }
 </script>

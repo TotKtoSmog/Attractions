@@ -126,6 +126,45 @@ namespace Attractions.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost]
+        public IActionResult FilterFeedBacks([FromBody] FilterRequest request)
+        {
+            try
+            {
+                var feedbacks = _context.Feedback.AsQueryable();
+
+                // Применяем фильтр на основе состояния чекбокса
+                if (request.OnlyAccepted)
+                {
+                    feedbacks = feedbacks.Where(f => !f.IsAccepted);
+                }
+
+                var result = feedbacks.Select(f => new
+                {
+                    f.Id,
+                    f.Id_User,
+                    f.NameSender,
+                    f.fb_datatime,
+                    f.FeedBackText,
+                    f.Ball,
+                    f.IsAccepted,
+                    f.Id_Sight
+                }).ToList();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ошибка при фильтрации: " + ex.Message);
+                return BadRequest();
+            }
+        }
+
+        // Класс для фильтрационного запроса
+        public class FilterRequest
+        {
+            public bool OnlyAccepted { get; set; }
+        }
         public async Task<IActionResult> Administration()
         {
             string email = Request.Cookies[KeyLogin] ?? "";
@@ -165,7 +204,7 @@ namespace Attractions.Controllers
 
             }
             return wrapper;
-        }
+        } 
         public void SaveCooKie(User _user)
         {
             CookieOptions cookieOptions = new CookieOptions();
